@@ -11,7 +11,7 @@ type ButtonProps = {
 }
 
 export const Container = styled.View<ContainerBackgroundColor>`
-    margin: 24px;
+    margin: 24px 0;
     padding: 20px 16px;
     position: relative;
     align-items: center;
