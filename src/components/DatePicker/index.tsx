@@ -14,8 +14,6 @@ export function DatePicker() {
         setShowPicker(false);
     };
 
-    console.log(date)
-
     return (
         <Container
             onPress={() => setShowPicker(true)}
