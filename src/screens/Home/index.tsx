@@ -3,7 +3,7 @@ import { CreateMeal } from "@components/CreateMeal";
 import { FoodCard } from "@components/FoodCard";
 import { Header } from "@components/Header";
 import { PercentPanel } from "@components/PercentPanel";
-import { Container, DayHeader } from "./styles";
+import { Container, DayHeader, PercentWrapper } from "./styles";
 
 type Food = {
     food: string
@@ -31,7 +31,9 @@ export function Home() {
     return (
         <Container>
             <Header />
-            <PercentPanel percent={5100} />
+            <PercentWrapper>
+                <PercentPanel percent={5100} />
+            </PercentWrapper>
             <CreateMeal />
             <SectionList
                 sections={data}

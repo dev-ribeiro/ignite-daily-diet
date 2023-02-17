@@ -11,10 +11,11 @@ type ButtonProps = {
 }
 
 export const Container = styled.View<ContainerBackgroundColor>`
-    margin: 24px 0;
+    flex: 1;
     padding: 20px 16px;
     position: relative;
     align-items: center;
+    justify-content: center;
     border-radius: 8px;
     background-color: ${({ theme, variant }) => {
         if(variant === "failure"){
@@ -42,14 +43,6 @@ export const Button = styled(TouchableOpacity) <ButtonProps>`
     }};
 `
 
-export const OpenIcon = styled(ArrowUpRight).attrs(() => ({
-    size: 24,
-}))``
-
-export const BackIcon = styled(ArrowLeft).attrs(() => ({
-    size: 24,
-}))``
-
 export const Title = styled.Text`
     ${({ theme }) => css`
         font-family: ${theme.FONT_FAMILY.BOLD};
@@ -64,4 +57,13 @@ export const InfoText = styled.Text`
         color: ${theme.COLORS.GRAY_200}
     `}
 `
+
+export const OpenIcon = styled(ArrowUpRight).attrs(() => ({
+    size: 24,
+}))``
+
+export const BackIcon = styled(ArrowLeft).attrs(() => ({
+    size: 24,
+}))``
+
 
