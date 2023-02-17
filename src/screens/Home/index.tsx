@@ -1,4 +1,5 @@
-import { SectionList, Text, View } from "react-native";
+import { SectionList } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { CreateMeal } from "@components/CreateMeal";
 import { FoodCard } from "@components/FoodCard";
 import { Header } from "@components/Header";
@@ -29,32 +30,34 @@ export function Home() {
     ]
 
     return (
-        <Container>
-            <Header />
-            <PercentWrapper>
-                <PercentPanel percent={5100} />
-            </PercentWrapper>
-            <CreateMeal />
-            <SectionList
-                sections={data}
-                keyExtractor={(item, index) => `${item.food}-${item.hour}=>${index}`}
-                renderSectionHeader={({ section: { title } }) => {
-                    return (
-                        <DayHeader
-                            style={{
-                                marginTop: (data[0].title === title) ? 0 : 32
-                            }}
-                        >{title}</DayHeader>
-                    )
-                }}
-                renderItem={({ item }) => (
-                    <FoodCard
-                        food={item.food}
-                        hour={item.hour}
-                        indicator={!item.isDiet ? 'failure' : 'success'}
-                    />
-                )}
-            />
-        </Container>
+        <SafeAreaView>
+            <Container>
+                <Header />
+                <PercentWrapper>
+                    <PercentPanel percent={5100} />
+                </PercentWrapper>
+                <CreateMeal />
+                <SectionList
+                    sections={data}
+                    keyExtractor={(item, index) => `${item.food}-${item.hour}=>${index}`}
+                    renderSectionHeader={({ section: { title } }) => {
+                        return (
+                            <DayHeader
+                                style={{
+                                    marginTop: (data[0].title === title) ? 0 : 32
+                                }}
+                            >{title}</DayHeader>
+                        )
+                    }}
+                    renderItem={({ item }) => (
+                        <FoodCard
+                            food={item.food}
+                            hour={item.hour}
+                            indicator={!item.isDiet ? 'failure' : 'success'}
+                        />
+                    )}
+                />
+            </Container>
+        </SafeAreaView>
     )
 }
