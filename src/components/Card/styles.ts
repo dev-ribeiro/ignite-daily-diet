@@ -7,7 +7,7 @@ type Props = {
 }
 
 export const Container = styled.View<Props>`
-    width: 100%;
+    align-self: stretch;
     align-items: center;
     padding: 16px;
     background-color: ${({theme, variant})=>{
