@@ -1,6 +1,6 @@
 import { TouchableOpacityProps } from "react-native"
 import { Separator } from "@components/Separator";
-import { ButtonVariantStyleType, Container, Icon, Indicator, Title } from "./styles";
+import { ButtonVariantStyleType, Container, Icon, Indicator, PencilIcon, Title, TrashIcon } from "./styles";
 
 type Props = TouchableOpacityProps & {
     isSelected?: boolean
@@ -18,6 +18,34 @@ export function Button({ isSelected = false, hasIcon = false, title, variant = "
                 {...props}
             >
                 {hasIcon && (<Icon />)}
+                <Title variant={variant}>{title}</Title>
+            </Container>
+        )
+    }
+
+    if (variant === "white") {
+        return (
+            <Container
+                variant={variant}
+                isSelected={isSelected}
+                {...props}
+            >
+                <TrashIcon />
+                <Separator width={12} />
+                <Title variant={variant}>{title}</Title>
+            </Container>
+        )
+    }
+
+    if (variant === "edit") {
+        return (
+            <Container
+                variant={variant}
+                isSelected={isSelected}
+                {...props}
+            >
+                <PencilIcon />
+                <Separator width={12} />
                 <Title variant={variant}>{title}</Title>
             </Container>
         )
