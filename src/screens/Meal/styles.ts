@@ -72,8 +72,8 @@ export const PointIndicator = styled.View<{ isDiet: boolean }>`
     height: 8px;
     border-radius: 999px;
 
-    ${({isDiet, theme})=>{
-        if(isDiet === false){
+    ${({ isDiet, theme }) => {
+        if (isDiet === false) {
             return css`
                 background-color: ${theme.COLORS.RED_DARK};
             `
@@ -91,4 +91,36 @@ export const TextIndicator = styled.Text`
         font-size: ${theme.FONT_SIZE.md}px;
         color: ${theme.COLORS.GRAY_100};
     `};
+`
+
+export const ModalContainer = styled.View`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+    /* background-color: ${({ theme }) => theme.COLORS.GRAY_400}; */
+    background-color: rgba(20, 20, 20, 0.5);
+`
+
+export const ModalWrapper = styled.View`
+    background-color: ${({ theme }) => theme.COLORS.WHITE};
+    padding: 24px;
+    border-radius: 6px;
+    align-items: center;
+`
+
+export const ModalTitle = styled.Text`
+    text-align: center;
+    ${({ theme }) => css`
+        color: ${theme.COLORS.GRAY_200};
+        font-family: ${theme.FONT_FAMILY.BOLD};
+        font-size: ${theme.FONT_SIZE.xl}px;
+    `};
+`
+
+export const ModalButtonInteraction = styled.View`
+    margin-top: 32px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
 `

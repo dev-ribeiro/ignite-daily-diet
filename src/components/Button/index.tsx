@@ -30,7 +30,7 @@ export function Button({ isSelected = false, hasIcon = false, title, variant = "
                 isSelected={isSelected}
                 {...props}
             >
-                <TrashIcon />
+                {hasIcon && (<TrashIcon />)}
                 <Separator width={12} />
                 <Title variant={variant}>{title}</Title>
             </Container>

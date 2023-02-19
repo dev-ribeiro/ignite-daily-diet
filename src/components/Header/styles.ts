@@ -30,13 +30,13 @@ export const Container = styled.View<Props>`
     }};
 
     ${({ isDiet, variant, theme }) => {
-        if (isDiet && variant === "diet") {
+        if (isDiet && (variant === "diet" || variant === "edit")) {
             return css`
                 background-color: ${theme.COLORS.GREEN_LIGHT};
             `
         }
 
-        if (isDiet === false && variant === "diet") {
+        if (isDiet === false && (variant === "diet" || "edit")) {
             return css`
                 background-color: ${theme.COLORS.RED_LIGHT};
             `
