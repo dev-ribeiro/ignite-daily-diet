@@ -1,18 +1,27 @@
-import { useState } from "react";
-import { Text } from "react-native"
+import { useEffect, useState } from "react";
 import { Container, Placeholder } from "./styles";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { formatDateToBRFormat } from "@utils/formatter";
 
-export function DatePicker() {
-    const [date, setdate] = useState(new Date())
+type Props = {
+    defaultVaue?: Date
+}
+
+export function DatePicker({ defaultVaue }: Props) {
+    const [date, setDate] = useState(new Date())
     const [showPicker, setShowPicker] = useState(false)
 
     const handleUserPicker = (event: any, selectedDate?: Date) => {
         const currentDate = selectedDate || date;
-        setdate(currentDate);
+        setDate(currentDate);
         setShowPicker(false);
     };
+
+    useEffect(()=>{
+        if(defaultVaue){
+            setDate(defaultVaue)
+        }
+    },[])
 
     return (
         <Container

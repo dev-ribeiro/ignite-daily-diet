@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Placeholder } from "./styles";
 import DateTimePicker from "@react-native-community/datetimepicker"
 import { formatHourToBRFormat } from "@utils/formatter";
 
-export function TimePicker() {
+type Props = {
+    defaultValue?: Date
+}
+
+export function TimePicker({ defaultValue }: Props) {
     const [time, setTime] = useState(new Date());
     const [showTimePicker, setShowTimePicker] = useState(false);
 
@@ -12,6 +16,12 @@ export function TimePicker() {
         setTime(currentTime);
         setShowTimePicker(false);
     };
+
+    useEffect(()=>{
+        if(defaultValue){
+            setTime(defaultValue)
+        }
+    },[])
 
     return (
         <Container
