@@ -19,7 +19,7 @@ export function Home() {
 
     const data: Section[] = [
         {
-            title: formatDateToBRFormat(new Date()).replace("/","."),
+            title: formatDateToBRFormat(new Date().toISOString()).replace("/","."),
             data: [
                 { dateTime: new Date().toISOString(), description: "Descrição de testes", id: "1", isDiet: true, title: "Salada" },
                 { dateTime: new Date().toISOString(), description: "Descrição de testes", id: "2", isDiet: false, title: "Salgado" },

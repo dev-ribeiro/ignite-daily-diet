@@ -27,7 +27,7 @@ export function DatePicker({ defaultVaue }: Props) {
         <Container
             onPress={() => setShowPicker(true)}
         >
-            <Placeholder>{formatDateToBRFormat(date)}</Placeholder>
+            <Placeholder>{formatDateToBRFormat(date.toISOString())}</Placeholder>
 
             {showPicker && (
                 <DateTimePicker

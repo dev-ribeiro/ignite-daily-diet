@@ -7,24 +7,15 @@ function formatNumberToString(number: number): string {
     return String(parseNumberToPercent).replace(".", ",")
 }
 
-function formatZeroLeft(time: number) {
+function formatDateToBRFormat(dateISOString: string): string {
+    const date = moment(dateISOString)
+    const formated = date.format("DD/MM/YYYY")
 
-    if (time < 10) {
-        return "0" + time
-    }
-
-    return String(time)
+    return formated
 }
 
-function formatDateToBRFormat(date: Date): string {
-
-    const formatedDate = `${formatZeroLeft(date.getDate())}/${formatZeroLeft(date.getMonth())}/${date.getFullYear()}`
-
-    return formatedDate
-}
-
-function formatHourToBRFormat(dateString: string): string {
-    const date = moment(dateString)
+function formatHourToBRFormat(dateISOString: string): string {
+    const date = moment(dateISOString)
     const hour = date.format("HH:mm")
 
     return hour
