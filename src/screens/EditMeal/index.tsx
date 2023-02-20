@@ -15,10 +15,8 @@ import {
     SubmitWrapper
 } from "./styles";
 import { Header } from "@components/Header";
-import { hourAdapter } from "@utils/converters";
 import { MealStorageDTO } from "@storage/meal/MealStorageDTO";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { formatHourToBRFormat } from "@utils/formatter";
 
 type RouteParams = {
     meal: MealStorageDTO
@@ -67,7 +65,7 @@ export function EditMeal() {
                     <CustomLabel>
                         <CustomPlaceholder>Hora</CustomPlaceholder>
                         <TimePicker
-                            defaultValue={hourAdapter(formatHourToBRFormat(new Date(dateTime)))}
+                            defaultValue={new Date(dateTime)}
                         />
                     </CustomLabel>
                 </TimeWrapper>

@@ -60,7 +60,7 @@ export function Home() {
                     renderItem={({ item }) => (
                         <FoodCard
                             title={item.title}
-                            dateTime={new Date(item.dateTime)}
+                            dateTime={item.dateTime}
                             indicator={!item.isDiet ? 'failure' : 'success'}
                             onPress={() => handleNavigationToMeal(item)}
                         />

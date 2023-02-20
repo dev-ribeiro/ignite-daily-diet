@@ -4,7 +4,7 @@ import { Container, Divider, FoodName, Hour, Indicator } from "./styles";
 
 type Props = TouchableOpacityProps & {
     title: string
-    dateTime: Date
+    dateTime: string
     indicator?: 'success' | 'failure'
 }
 

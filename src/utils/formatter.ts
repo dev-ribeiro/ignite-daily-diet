@@ -1,3 +1,5 @@
+import moment from "moment"
+
 function formatNumberToString(number: number): string {
 
     const parseNumberToPercent = (number / 100).toFixed(2)
@@ -21,11 +23,11 @@ function formatDateToBRFormat(date: Date): string {
     return formatedDate
 }
 
-function formatHourToBRFormat(date: Date): string {
-    const hour = date.getUTCHours()
-    const minutes = date.getUTCMinutes()
+function formatHourToBRFormat(dateString: string): string {
+    const date = moment(dateString)
+    const hour = date.format("HH:mm")
 
-    return `${formatZeroLeft(hour)}:${formatZeroLeft(minutes)}`
+    return hour
 }
 
 export { formatNumberToString, formatDateToBRFormat, formatHourToBRFormat }

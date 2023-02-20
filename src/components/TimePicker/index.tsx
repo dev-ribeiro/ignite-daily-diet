@@ -27,7 +27,7 @@ export function TimePicker({ defaultValue }: Props) {
         <Container
             onPress={() => setShowTimePicker(true)}
         >
-            <Placeholder>{formatHourToBRFormat(time)}</Placeholder>
+            <Placeholder>{formatHourToBRFormat(time.toISOString())}</Placeholder>
             {showTimePicker && (
                 <DateTimePicker
                     testID="timePicker"
