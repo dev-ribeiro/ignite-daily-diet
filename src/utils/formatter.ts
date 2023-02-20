@@ -7,11 +7,18 @@ function formatNumberToString(number: number): string {
     return String(parseNumberToPercent).replace(".", ",")
 }
 
-function formatDateToBRFormat(dateISOString: string): string {
-    const date = moment(dateISOString)
-    const formated = date.format("DD/MM/YYYY")
+type Options = {
+    customFormat?: boolean
+}
 
-    return formated
+function formatDateToBRFormat(dateISOString: string, { customFormat }: Options): string {
+    const date = moment(dateISOString)
+
+    if (customFormat) {
+        return date.format("DD.MM.YYYY")
+    }
+
+    return date.format("DD/MM/YYYY")
 }
 
 function formatHourToBRFormat(dateISOString: string): string {
