@@ -10,23 +10,32 @@ import {
     CustomLabel,
     CustomPlaceholder,
     TimeWrapper,
-    Header,
-    Icon,
-    Title,
     Wrapper,
     DietWrapper,
     SubmitWrapper
 } from "./styles";
+import { Header } from "@components/Header";
+import { useNavigation } from "@react-navigation/native";
 
 export function NewMeal() {
     const [isDiet, setIsDiet] = useState<boolean | null>(null)
 
+    const {navigate} = useNavigation()
+
+    function handleNavigateToResultDiet(){
+        if(isDiet !== null && isDiet === false){
+            return navigate("failure")
+        }
+
+        navigate("success")
+    }
+
     return (
         <Container>
-            <Header>
-                <Icon />
-                <Title>Nova refeição</Title>
-            </Header>
+            <Header
+                title="Nova refeição"
+                variant="create"
+            />
             <Wrapper>
                 <Label title="Nome">
                     <Input />
@@ -71,6 +80,7 @@ export function NewMeal() {
                 <Button
                     title="Cadastrar refeição"
                     variant="default"
+                    onPress={handleNavigateToResultDiet}
                 />
             </SubmitWrapper>
         </Container>

@@ -5,41 +5,49 @@ import { FoodCard } from "@components/FoodCard";
 import { Header } from "@components/Header";
 import { PercentPanel } from "@components/PercentPanel";
 import { Container, DayHeader, PercentWrapper } from "./styles";
-
-type Food = {
-    food: string
-    hour: string
-    isDiet: boolean
-}
+import { useNavigation } from "@react-navigation/native";
+import { MealStorageDTO } from "@storage/meal/MealStorageDTO";
+import { formatDateToBRFormat } from "@utils/formatter";
 
 type Section = {
     title: string
-    data: Food[]
+    data: MealStorageDTO[]
 }
 
 export function Home() {
+    const { navigate } = useNavigation()
+
     const data: Section[] = [
         {
-            title: '12/03/22', data: [
-                { food: 'X-tudo', hour: '20:00', isDiet: false },
-                { food: 'X-salada', hour: '20:00', isDiet: false },
+            title: formatDateToBRFormat(new Date()).replace("/","."),
+            data: [
+                { dateTime: new Date().toISOString(), description: "Descrição de testes", id: "1", isDiet: true, title: "Salada" },
+                { dateTime: new Date().toISOString(), description: "Descrição de testes", id: "2", isDiet: false, title: "Salgado" },
             ]
-        },
-        { title: '13/03/22', data: [{ food: 'X-tudo', hour: '20:00', isDiet: true }] },
-        { title: '14/03/22', data: [{ food: 'X-tudo', hour: '20:00', isDiet: true }] },
+        }
     ]
+
+    function handleNavigationToStatistics() {
+        navigate("statistics")
+    }
+
+    function handleNavigationToMeal(meal: MealStorageDTO) {
+        navigate("meal", { meal: meal })
+    }
 
     return (
         <SafeAreaView>
             <Container>
                 <Header />
-                <PercentWrapper>
+                <PercentWrapper
+                    onPress={handleNavigationToStatistics}
+                >
                     <PercentPanel percent={5100} />
                 </PercentWrapper>
                 <CreateMeal />
                 <SectionList
                     sections={data}
-                    keyExtractor={(item, index) => `${item.food}-${item.hour}=>${index}`}
+                    keyExtractor={item => item.id}
                     renderSectionHeader={({ section: { title } }) => {
                         return (
                             <DayHeader
@@ -51,9 +59,10 @@ export function Home() {
                     }}
                     renderItem={({ item }) => (
                         <FoodCard
-                            food={item.food}
-                            hour={item.hour}
+                            title={item.title}
+                            dateTime={new Date(item.dateTime)}
                             indicator={!item.isDiet ? 'failure' : 'success'}
+                            onPress={() => handleNavigationToMeal(item)}
                         />
                     )}
                 />

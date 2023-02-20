@@ -4,6 +4,7 @@ import { Separator } from "@components/Separator";
 import { Container, InfoWrapper, PanelWrapper, Title, Wrapper } from "./styles";
 
 export function Statistics() {
+
     return (
         <Container>
             <PanelWrapper>

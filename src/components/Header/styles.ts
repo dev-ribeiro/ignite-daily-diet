@@ -2,7 +2,7 @@ import styled, { css } from "styled-components/native";
 import { ArrowLeft, User } from "phosphor-react-native"
 import { TouchableOpacity } from "react-native";
 
-export type HeaderVariantType = "default" | "diet" | "edit"
+export type HeaderVariantType = "default" | "diet" | "edit" | "create"
 
 type Props = {
     variant: HeaderVariantType
@@ -30,6 +30,12 @@ export const Container = styled.View<Props>`
     }};
 
     ${({ isDiet, variant, theme }) => {
+        if(variant === "create"){
+            return css`
+                background-color: ${theme.COLORS.GRAY_500};
+            `
+        }
+
         if (isDiet && (variant === "diet" || variant === "edit")) {
             return css`
                 background-color: ${theme.COLORS.GREEN_LIGHT};

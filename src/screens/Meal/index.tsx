@@ -1,20 +1,48 @@
 import { Button } from "@components/Button";
 import { Header } from "@components/Header";
 import { Separator } from "@components/Separator";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { MealStorageDTO } from "@storage/meal/MealStorageDTO";
+import { formatDateToBRFormat, formatHourToBRFormat } from "@utils/formatter";
 import { useState } from "react";
 import { Modal } from "react-native";
-import { Container, CustomLabel, DateHour, DateTimeTitle, Description, InteractionWrapper, MealWrapper, ModalButtonInteraction, ModalContainer, ModalTitle, ModalWrapper, PointIndicator, TextIndicator, Title, Wrapper } from "./styles";
+import {
+    Container,
+    CustomLabel,
+    DateHour,
+    DateTimeTitle,
+    Description,
+    InteractionWrapper,
+    MealWrapper,
+    ModalButtonInteraction,
+    ModalContainer,
+    ModalTitle,
+    ModalWrapper,
+    PointIndicator,
+    TextIndicator,
+    Title,
+    Wrapper
+} from "./styles";
 
-type Props = {
-    title: string
-    description: string
-    date: string
-    hour: string
-    isDiet: boolean
+type RouteParams = {
+    meal: MealStorageDTO
 }
 
-export function Meal({ date, description, hour, isDiet, title }: Props) {
+export function Meal() {
     const [modalVisibility, setModalVisibility] = useState(false)
+    const { navigate } = useNavigation()
+    const router = useRoute()
+    const { meal } = router.params as RouteParams
+
+    const navigationParam = meal
+    const { dateTime, description, isDiet, title } = meal
+
+    const date = formatDateToBRFormat(new Date(dateTime))
+    const hour = formatHourToBRFormat(new Date(dateTime))
+
+    function handleNavigateToEditScreen() {
+        navigate("edit", { meal: navigationParam })
+    }
 
     return (
         <>
@@ -41,6 +69,7 @@ export function Meal({ date, description, hour, isDiet, title }: Props) {
                         <Button
                             title="Editar refeição"
                             variant="edit"
+                            onPress={handleNavigateToEditScreen}
                         />
                         <Separator height={12} />
                         <Button
@@ -66,7 +95,7 @@ export function Meal({ date, description, hour, isDiet, title }: Props) {
                                     variant="white"
                                     onPress={() => setModalVisibility(false)}
                                 />
-                                <Separator width={12}/>
+                                <Separator width={12} />
                                 <Button
                                     title="Sim, excluir"
                                 />

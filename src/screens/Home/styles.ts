@@ -4,7 +4,7 @@ export const Container = styled.View`
     padding: 0 24px;
 `
 
-export const PercentWrapper = styled.View`
+export const PercentWrapper = styled.TouchableOpacity`
     height: 104px;
     margin-top: 32px;
     margin-bottom: 40px;

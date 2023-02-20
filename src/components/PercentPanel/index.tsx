@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native"
 import { formatNumberToString } from "@utils/formatter"
 import { useTheme } from "styled-components/native"
 import { BackIcon, Button, Container, InfoText, OpenIcon, Title } from "./styles"
@@ -9,6 +10,11 @@ type Props = {
 
 export function PercentPanel({ isBackPage = false, percent }: Props) {
     const { COLORS } = useTheme()
+    const navigation = useNavigation()
+
+    function handleBackNavigation(){
+        navigation.navigate("home")
+    }
 
     const verifySuccessDiet = (percent > 5000) ? "success" : "failure"
 
@@ -16,6 +22,7 @@ export function PercentPanel({ isBackPage = false, percent }: Props) {
         <Container variant={verifySuccessDiet}>
             <Button
                 variant={isBackPage ? "back" : "default"}
+                onPress={isBackPage ? handleBackNavigation : () => {}}
             >
                 {!isBackPage
                     ? (

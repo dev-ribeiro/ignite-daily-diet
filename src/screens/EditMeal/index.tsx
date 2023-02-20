@@ -15,18 +15,26 @@ import {
     SubmitWrapper
 } from "./styles";
 import { Header } from "@components/Header";
-import { hourAdapter } from "@utils/hourAdapter";
+import { hourAdapter } from "@utils/converters";
+import { MealStorageDTO } from "@storage/meal/MealStorageDTO";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { formatHourToBRFormat } from "@utils/formatter";
 
-type Props = {
-    name: string
-    description: string
-    date: string
-    hour: string
-    diet: boolean
+type RouteParams = {
+    meal: MealStorageDTO
 }
 
-export function EditMeal({ date, description, hour, diet, name }: Props) {
-    const [isDiet, setIsDiet] = useState<boolean>(diet)
+export function EditMeal() {
+    const { navigate } = useNavigation()
+    const router = useRoute()
+    const { meal } = router.params as RouteParams
+    const { dateTime, description, isDiet, title } = meal
+
+    const [diet, setDiet] = useState(isDiet)
+
+    function handleNavigateToHome() {
+        navigate("home")
+    }
 
     return (
         <Container>
@@ -36,7 +44,7 @@ export function EditMeal({ date, description, hour, diet, name }: Props) {
             />
             <Wrapper>
                 <Label title="Nome">
-                    <Input value={name} />
+                    <Input value={title} />
                 </Label>
                 <Separator height={24} />
                 <Label title="Descrição">
@@ -52,14 +60,14 @@ export function EditMeal({ date, description, hour, diet, name }: Props) {
                     <CustomLabel>
                         <CustomPlaceholder>Data</CustomPlaceholder>
                         <DatePicker
-                            defaultVaue={new Date(date)}
+                            defaultVaue={new Date(dateTime)}
                         />
                     </CustomLabel>
                     <Separator width={20} />
                     <CustomLabel>
                         <CustomPlaceholder>Hora</CustomPlaceholder>
                         <TimePicker
-                            defaultValue={hourAdapter(hour)}
+                            defaultValue={hourAdapter(formatHourToBRFormat(new Date(dateTime)))}
                         />
                     </CustomLabel>
                 </TimeWrapper>
@@ -67,15 +75,15 @@ export function EditMeal({ date, description, hour, diet, name }: Props) {
                     <Button
                         title="Sim"
                         variant="success"
-                        isSelected={isDiet !== null && isDiet}
-                        onPress={() => setIsDiet(true)}
+                        isSelected={diet !== null && diet}
+                        onPress={() => setDiet(true)}
                     />
                     <Separator width={8} />
                     <Button
                         title="Não"
                         variant="failure"
-                        isSelected={isDiet !== null && isDiet}
-                        onPress={() => setIsDiet(false)}
+                        isSelected={diet !== null && diet}
+                        onPress={() => setDiet(false)}
                     />
                 </DietWrapper>
             </Wrapper>
@@ -83,6 +91,7 @@ export function EditMeal({ date, description, hour, diet, name }: Props) {
                 <Button
                     title="Salvar alterações"
                     variant="default"
+                    onPress={handleNavigateToHome}
                 />
             </SubmitWrapper>
         </Container>

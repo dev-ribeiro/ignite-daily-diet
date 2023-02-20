@@ -1,16 +1,17 @@
+import { TouchableOpacity } from "react-native"
 import styled, { css } from "styled-components/native";
 
 type IndicatorStyleProp = {
     variant: 'success' | 'failure'
 }
 
-export const Container = styled.View`
+export const Container = styled(TouchableOpacity)`
     padding: 12px 14px;
     margin-bottom: 8px;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    border: 1px solid ${({theme})=>theme.COLORS.GRAY_400};
+    border: 1px solid ${({ theme }) => theme.COLORS.GRAY_400};
     border-radius: 6px;
 `
 
@@ -42,7 +43,7 @@ export const Indicator = styled.View<IndicatorStyleProp>`
     height: 14px;
     border-radius: 999px;
     background-color: ${({ theme, variant }) => {
-        if(variant === 'failure'){
+        if (variant === 'failure') {
             return theme.COLORS.RED_LIGHT
         }
 
