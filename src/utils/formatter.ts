@@ -28,4 +28,11 @@ function formatHourToBRFormat(dateISOString: string): string {
     return hour
 }
 
-export { formatNumberToString, formatDateToBRFormat, formatHourToBRFormat }
+function formatToISOFormat(date: Date, hour: Date) {
+    const formatedDate = moment(date).format("YYYY-MM-DD")
+    const formatedHour = moment(hour).format("HH:mm")
+
+    return `${formatedDate}T${formatedHour}`
+}
+
+export { formatNumberToString, formatDateToBRFormat, formatHourToBRFormat, formatToISOFormat }
