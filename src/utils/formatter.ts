@@ -2,7 +2,7 @@ import moment from "moment"
 
 function formatNumberToString(number: number): string {
 
-    const parseNumberToPercent = (number / 100).toFixed(2)
+    const parseNumberToPercent = number.toFixed(2)
 
     return String(parseNumberToPercent).replace(".", ",")
 }

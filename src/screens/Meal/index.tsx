@@ -2,10 +2,11 @@ import { Button } from "@components/Button";
 import { Header } from "@components/Header";
 import { Separator } from "@components/Separator";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { mealDelete } from "@storage/meal/mealDelete";
 import { MealStorageDTO } from "@storage/meal/MealStorageDTO";
 import { formatDateToBRFormat, formatHourToBRFormat } from "@utils/formatter";
 import { useState } from "react";
-import { Modal } from "react-native";
+import { Alert, Modal } from "react-native";
 import {
     Container,
     CustomLabel,
@@ -34,14 +35,19 @@ export function Meal() {
     const router = useRoute()
     const { meal } = router.params as RouteParams
 
-    const navigationParam = meal
-    const { dateTime, description, isDiet, title } = meal
+    const { dateTime, description, isDiet, title, id } = meal
 
     const date = formatDateToBRFormat(dateTime, { customFormat: false })
     const hour = formatHourToBRFormat(dateTime)
+    const navigationParam = meal
 
-    function handleNavigateToEditScreen() {
-        navigate("edit", { meal: navigationParam })
+    async function handleDeleteMeal(id: string) {
+        try {
+            await mealDelete(id)
+            navigate("home")
+        } catch (error) {
+            Alert.alert("Excluir refeição", "Não foi possível excluir a refeição")
+        }
     }
 
     return (
@@ -69,7 +75,7 @@ export function Meal() {
                         <Button
                             title="Editar refeição"
                             variant="edit"
-                            onPress={handleNavigateToEditScreen}
+                            onPress={() => navigate("edit", { meal: navigationParam })}
                         />
                         <Separator height={12} />
                         <Button
@@ -98,6 +104,7 @@ export function Meal() {
                                 <Separator width={12} />
                                 <Button
                                     title="Sim, excluir"
+                                    onPress={() => handleDeleteMeal(id)}
                                 />
                             </ModalButtonInteraction>
                         </ModalWrapper>

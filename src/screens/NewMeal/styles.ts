@@ -23,13 +23,17 @@ export const Title = styled.Text`
 
 export const Wrapper = styled.View`
     flex: 1;
-    align-items: stretch;
-    justify-items: center;
+    justify-content:space-between;
     margin-top: -30px;
     padding: 40px 24px 0;
     background-color: ${({ theme }) => theme.COLORS.GRAY_700};
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+`
+
+export const FormWrapper = styled.View`
+    align-items: stretch;
+    justify-items: center;
 `
 
 export const Icon = styled(ArrowLeft).attrs(({ theme }) => ({
@@ -68,6 +72,5 @@ export const DietWrapper = styled.View`
 
 export const SubmitWrapper = styled.View`
     width: 100%;
-    padding: 0 24px;
     margin-bottom: 56px;
 `

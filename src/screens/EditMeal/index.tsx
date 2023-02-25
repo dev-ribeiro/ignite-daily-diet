@@ -17,6 +17,9 @@ import {
 import { Header } from "@components/Header";
 import { MealStorageDTO } from "@storage/meal/MealStorageDTO";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { createDateTime } from "@utils/createDateTime";
+import { mealEdit } from "@storage/meal/mealEdit";
+import { Alert } from "react-native";
 
 type RouteParams = {
     meal: MealStorageDTO
@@ -26,12 +29,35 @@ export function EditMeal() {
     const { navigate } = useNavigation()
     const router = useRoute()
     const { meal } = router.params as RouteParams
-    const { dateTime, description, isDiet, title } = meal
-
+    const { id, dateTime, description, isDiet, title } = meal
     const [diet, setDiet] = useState(isDiet)
+    const [editName, setEditName] = useState(title)
+    const [editDescription, setEditDesctipion] = useState(description)
+    const [date, setDate] = useState(new Date(dateTime))
+    const [time, setTime] = useState(new Date(dateTime))
 
-    function handleNavigateToHome() {
-        navigate("home")
+
+    function navigateToMeal(newMeal: MealStorageDTO) {
+        navigate("meal", { meal: newMeal })
+    }
+
+    function handeEditMeal() {
+        const newDateTime = createDateTime(date, time)
+
+        const newMeal: MealStorageDTO = {
+            id,
+            title: editName,
+            description: editDescription,
+            dateTime: newDateTime,
+            isDiet: diet,
+        }
+
+        try {
+            mealEdit(newMeal)
+            navigateToMeal(newMeal)
+        } catch (error) {
+            Alert.alert("Editar refeição", "Não foi possível editar a refeição.")
+        }
     }
 
     return (
@@ -42,7 +68,10 @@ export function EditMeal() {
             />
             <Wrapper>
                 <Label title="Nome">
-                    <Input value={title} />
+                    <Input
+                        value={editName}
+                        onChangeText={setEditName}
+                    />
                 </Label>
                 <Separator height={24} />
                 <Label title="Descrição">
@@ -50,7 +79,8 @@ export function EditMeal() {
                         multiline
                         variant="textarea"
                         textAlignVertical="top"
-                        value={description}
+                        value={editDescription}
+                        onChangeText={setEditDesctipion}
                     />
                 </Label>
                 <Separator height={24} />
@@ -59,6 +89,8 @@ export function EditMeal() {
                         <CustomPlaceholder>Data</CustomPlaceholder>
                         <DatePicker
                             defaultVaue={new Date(dateTime)}
+                            date={date}
+                            handleUpdateDate={setDate}
                         />
                     </CustomLabel>
                     <Separator width={20} />
@@ -66,6 +98,8 @@ export function EditMeal() {
                         <CustomPlaceholder>Hora</CustomPlaceholder>
                         <TimePicker
                             defaultValue={new Date(dateTime)}
+                            time={time}
+                            handleUpdateTime={setTime}
                         />
                     </CustomLabel>
                 </TimeWrapper>
@@ -73,14 +107,14 @@ export function EditMeal() {
                     <Button
                         title="Sim"
                         variant="success"
-                        isSelected={diet !== null && diet}
+                        isSelected={diet!!}
                         onPress={() => setDiet(true)}
                     />
                     <Separator width={8} />
                     <Button
                         title="Não"
                         variant="failure"
-                        isSelected={diet !== null && diet}
+                        isSelected={diet!!}
                         onPress={() => setDiet(false)}
                     />
                 </DietWrapper>
@@ -89,7 +123,7 @@ export function EditMeal() {
                 <Button
                     title="Salvar alterações"
                     variant="default"
-                    onPress={handleNavigateToHome}
+                    onPress={handeEditMeal}
                 />
             </SubmitWrapper>
         </Container>
