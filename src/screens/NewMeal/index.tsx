@@ -12,7 +12,8 @@ import {
     TimeWrapper,
     Wrapper,
     DietWrapper,
-    SubmitWrapper
+    SubmitWrapper,
+    FormWrapper
 } from "./styles";
 import { Header } from "@components/Header";
 import { useNavigation } from "@react-navigation/native";
@@ -31,8 +32,8 @@ export function NewMeal() {
 
     const { navigate } = useNavigation()
 
-    function handleNavigateToResult(){
-        if(isDiet === true){
+    function handleNavigateToResult() {
+        if (isDiet === true) {
             navigate("success")
             return
         }
@@ -41,25 +42,25 @@ export function NewMeal() {
     }
 
     function handleRegisterMealInStorage() {
-        if(!name || name === ''){
-            Alert.alert("Cadastrar refeição","Favor informar uma refeição.")
+        if (!name || name === '') {
+            Alert.alert("Cadastrar refeição", "Favor informar uma refeição.")
             return
         }
 
-        if(!date || !time){
-            Alert.alert("Cadastrar refeição","Favor informar uma data ou hora válida")
+        if (!date || !time) {
+            Alert.alert("Cadastrar refeição", "Favor informar uma data ou hora válida")
             return
         }
 
-        if(isDiet === null){
-            Alert.alert("Cadastrar refeição","Favor informar se a refeição está na dieta ou não.")
+        if (isDiet === null) {
+            Alert.alert("Cadastrar refeição", "Favor informar se a refeição está na dieta ou não.")
             return
         }
 
         try {
             const dateTime = createDateTime(date, time)
             const id = generateUUID()
-            const meal:MealStorageDTO = {
+            const meal: MealStorageDTO = {
                 id,
                 dateTime,
                 title: name,
@@ -82,69 +83,73 @@ export function NewMeal() {
     }
 
     return (
-        <Container>
-            <Header
-                title="Nova refeição"
-                variant="create"
-            />
-            <Wrapper>
-                <Label title="Nome">
-                    <Input
-                        value={name}
-                        onChangeText={setName}
-                    />
-                </Label>
-                <Separator height={24} />
-                <Label title="Descrição">
-                    <Input
-                        multiline
-                        variant="textarea"
-                        textAlignVertical="top"
-                        value={description}
-                        onChangeText={setDescription}
-                    />
-                </Label>
-                <Separator height={24} />
-                <TimeWrapper>
-                    <CustomLabel>
-                        <CustomPlaceholder>Data</CustomPlaceholder>
-                        <DatePicker
-                            date={date}
-                            handleUpdateDate={setDate}
-                        />
-                    </CustomLabel>
-                    <Separator width={20} />
-                    <CustomLabel>
-                        <CustomPlaceholder>Hora</CustomPlaceholder>
-                        <TimePicker
-                            time={time}
-                            handleUpdateTime={setTime}
-                        />
-                    </CustomLabel>
-                </TimeWrapper>
-                <DietWrapper>
-                    <Button
-                        title="Sim"
-                        variant="success"
-                        isSelected={isDiet!!}
-                        onPress={() => setIsDiet(true)}
-                    />
-                    <Separator width={8} />
-                    <Button
-                        title="Não"
-                        variant="failure"
-                        isSelected={isDiet!!}
-                        onPress={() => setIsDiet(false)}
-                    />
-                </DietWrapper>
-            </Wrapper>
-            <SubmitWrapper>
-                <Button
-                    title="Cadastrar refeição"
-                    variant="default"
-                    onPress={handleRegisterMealInStorage}
+        <>
+            <Container>
+                <Header
+                    title="Nova refeição"
+                    variant="create"
                 />
-            </SubmitWrapper>
-        </Container>
+                <Wrapper>
+                    <FormWrapper>
+                        <Label title="Nome">
+                            <Input
+                                value={name}
+                                onChangeText={setName}
+                            />
+                        </Label>
+                        <Separator height={24} />
+                        <Label title="Descrição">
+                            <Input
+                                multiline
+                                variant="textarea"
+                                textAlignVertical="top"
+                                value={description}
+                                onChangeText={setDescription}
+                            />
+                        </Label>
+                        <Separator height={24} />
+                        <TimeWrapper>
+                            <CustomLabel>
+                                <CustomPlaceholder>Data</CustomPlaceholder>
+                                <DatePicker
+                                    date={date}
+                                    handleUpdateDate={setDate}
+                                />
+                            </CustomLabel>
+                            <Separator width={20} />
+                            <CustomLabel>
+                                <CustomPlaceholder>Hora</CustomPlaceholder>
+                                <TimePicker
+                                    time={time}
+                                    handleUpdateTime={setTime}
+                                />
+                            </CustomLabel>
+                        </TimeWrapper>
+                        <DietWrapper>
+                            <Button
+                                title="Sim"
+                                variant="success"
+                                isSelected={isDiet!!}
+                                onPress={() => setIsDiet(true)}
+                            />
+                            <Separator width={8} />
+                            <Button
+                                title="Não"
+                                variant="failure"
+                                isSelected={isDiet!!}
+                                onPress={() => setIsDiet(false)}
+                            />
+                        </DietWrapper>
+                    </FormWrapper>
+                    <SubmitWrapper>
+                        <Button
+                            title="Cadastrar refeição"
+                            variant="default"
+                            onPress={handleRegisterMealInStorage}
+                        />
+                    </SubmitWrapper>
+                </Wrapper>
+            </Container>
+        </>
     )
 }
