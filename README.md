@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./github/assets/capa.png"/>
+    <img src="./.github/assets/capa.png"/>
 </p>
 
 # Daily Diet
