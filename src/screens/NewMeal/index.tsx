@@ -19,6 +19,7 @@ import { useNavigation } from "@react-navigation/native";
 import { MealStorageDTO } from "@storage/meal/MealStorageDTO";
 import { createDateTime } from "@utils/createDateTime";
 import { Alert } from "react-native";
+import { createMeal } from "@storage/meal/mealCreate";
 
 export function NewMeal() {
     const [name, setName] = useState('')
@@ -66,7 +67,7 @@ export function NewMeal() {
                 isDiet: isDiet!!,
             }
 
-            // TODO
+            createMeal(meal)
 
             handleNavigateToResult()
 
