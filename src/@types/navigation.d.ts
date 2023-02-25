@@ -11,7 +11,10 @@ export declare global {
         meal: {
           meal: MealStorageDTO
         };
-        statistics: undefined;
+        statistics: {
+          allMeals: number,
+          percent: number
+        };
         failure: undefined;
         success: undefined;
       }
