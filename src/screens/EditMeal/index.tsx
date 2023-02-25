@@ -18,6 +18,8 @@ import { Header } from "@components/Header";
 import { MealStorageDTO } from "@storage/meal/MealStorageDTO";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { createDateTime } from "@utils/createDateTime";
+import { mealEdit } from "@storage/meal/mealEdit";
+import { Alert } from "react-native";
 
 type RouteParams = {
     meal: MealStorageDTO
@@ -27,7 +29,7 @@ export function EditMeal() {
     const { navigate } = useNavigation()
     const router = useRoute()
     const { meal } = router.params as RouteParams
-    const { dateTime, description, isDiet, title } = meal
+    const { id, dateTime, description, isDiet, title } = meal
     const [diet, setDiet] = useState(isDiet)
     const [editName, setEditName] = useState(title)
     const [editDescription, setEditDesctipion] = useState(description)
@@ -35,23 +37,27 @@ export function EditMeal() {
     const [time, setTime] = useState(new Date(dateTime))
 
 
-    function handleNavigateToHome() {
+    function navigateToHome() {
         navigate("home")
     }
 
     function handeEditMeal() {
         const newDateTime = createDateTime(date, time)
-        const newId = `${newDateTime}(-)${editName}`
 
         const newMeal: MealStorageDTO = {
-            id: newId,
+            id,
             title: editName,
             description: editDescription,
             dateTime: newDateTime,
             isDiet: diet,
         }
 
-        // TODO: update meal in storage
+        try {
+            mealEdit(newMeal)
+            navigateToHome()
+        } catch (error) {
+            Alert.alert("Editar refeição", "Não foi possível editar a refeição.")
+        }
     }
 
     return (

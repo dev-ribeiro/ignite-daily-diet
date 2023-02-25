@@ -67,8 +67,6 @@ export function NewMeal() {
                 isDiet: isDiet!!,
             }
 
-            console.log(meal)
-
             createMeal(meal)
 
             handleNavigateToResult()
