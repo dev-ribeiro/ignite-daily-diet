@@ -37,7 +37,7 @@ export function Meal() {
     const navigationParam = meal
     const { dateTime, description, isDiet, title } = meal
 
-    const date = formatDateToBRFormat(dateTime)
+    const date = formatDateToBRFormat(dateTime, { customFormat: false })
     const hour = formatHourToBRFormat(dateTime)
 
     function handleNavigateToEditScreen() {

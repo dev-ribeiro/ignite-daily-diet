@@ -58,7 +58,7 @@ export function Home() {
     }
 
     function handleNavigationToMeal(meal: MealStorageDTO) {
-        navigate("meal", { meal: meal })
+        navigate("meal", { meal })
     }
 
     useFocusEffect(useCallback(() => {
