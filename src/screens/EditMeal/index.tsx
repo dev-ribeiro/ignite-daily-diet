@@ -37,8 +37,8 @@ export function EditMeal() {
     const [time, setTime] = useState(new Date(dateTime))
 
 
-    function navigateToHome() {
-        navigate("home")
+    function navigateToMeal(newMeal: MealStorageDTO) {
+        navigate("meal", { meal: newMeal })
     }
 
     function handeEditMeal() {
@@ -54,7 +54,7 @@ export function EditMeal() {
 
         try {
             mealEdit(newMeal)
-            navigateToHome()
+            navigateToMeal(newMeal)
         } catch (error) {
             Alert.alert("Editar refeição", "Não foi possível editar a refeição.")
         }
