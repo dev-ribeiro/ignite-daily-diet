@@ -22,6 +22,8 @@ type Section = {
 export function Home() {
     const [data, setData] = useState<Section[]>([])
     const [isLoading, setIsLoading] = useState(true)
+    const [allMeals, setAllMeals] = useState<number>(0)
+    const [percent, setPercent] = useState<number>(0)
     const { navigate } = useNavigation()
 
     function transformDataFromStorage(arr: MealStorageDTO[]) {
@@ -37,11 +39,11 @@ export function Home() {
                     title: date,
                     data: arr
                         .sort((a, b) => {
-                            if(new Date(a.dateTime) < new Date(b.dateTime)){
+                            if (new Date(a.dateTime) < new Date(b.dateTime)) {
                                 return -1
                             }
 
-                            if(new Date(a.dateTime) > new Date(b.dateTime)){
+                            if (new Date(a.dateTime) > new Date(b.dateTime)) {
                                 return 1
                             }
 
@@ -55,10 +57,24 @@ export function Home() {
         setIsLoading(false)
     }
 
+    function calcPercentOfMealsIsDiet(arr: MealStorageDTO[]) {
+        setAllMeals(arr.length)
+
+        if (arr.length > 0) {
+
+            const mealsInDiet = arr.filter(meal => meal.isDiet === true)
+            const calcPercent = (mealsInDiet.length / arr.length) * 100
+
+            setPercent(Number(calcPercent.toFixed(0)))
+
+        }
+    }
+
     async function fetchDataFromStorage() {
         try {
             const response = await mealsGetAll()
             transformDataFromStorage(response)
+            calcPercentOfMealsIsDiet(response)
         } catch (error) {
             if (error instanceof CustomError) {
                 Alert.alert("Listar refeições", error.message)
@@ -69,7 +85,7 @@ export function Home() {
     }
 
     function handleNavigationToStatistics() {
-        navigate("statistics")
+        navigate("statistics", { allMeals, percent })
     }
 
     function handleNavigationToMeal(meal: MealStorageDTO) {
@@ -87,7 +103,7 @@ export function Home() {
                 <PercentWrapper
                     onPress={handleNavigationToStatistics}
                 >
-                    <PercentPanel percent={5100} />
+                    <PercentPanel percent={percent} />
                 </PercentWrapper>
                 <CreateMeal />
                 {isLoading

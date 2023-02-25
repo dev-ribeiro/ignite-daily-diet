@@ -16,7 +16,7 @@ export function PercentPanel({ isBackPage = false, percent }: Props) {
         navigation.navigate("home")
     }
 
-    const verifySuccessDiet = (percent > 5000) ? "success" : "failure"
+    const verifySuccessDiet = (percent > 50) ? "success" : "failure"
 
     return (
         <Container variant={verifySuccessDiet}>
