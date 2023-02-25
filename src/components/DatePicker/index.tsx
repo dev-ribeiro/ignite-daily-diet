@@ -5,29 +5,32 @@ import { formatDateToBRFormat } from "@utils/formatter";
 
 type Props = {
     defaultVaue?: Date
+    date: Date,
+    handleUpdateDate: (param: Date) => void
 }
 
-export function DatePicker({ defaultVaue }: Props) {
-    const [date, setDate] = useState(new Date())
+export function DatePicker({ date, defaultVaue, handleUpdateDate }: Props) {
     const [showPicker, setShowPicker] = useState(false)
 
     const handleUserPicker = (event: any, selectedDate?: Date) => {
         const currentDate = selectedDate || date;
-        setDate(currentDate);
+        handleUpdateDate(currentDate);
         setShowPicker(false);
     };
 
-    useEffect(()=>{
-        if(defaultVaue){
-            setDate(defaultVaue)
+    useEffect(() => {
+        if (defaultVaue) {
+            handleUpdateDate(defaultVaue)
         }
-    },[])
+    }, [])
 
     return (
         <Container
             onPress={() => setShowPicker(true)}
         >
-            <Placeholder>{formatDateToBRFormat(date.toISOString())}</Placeholder>
+            <Placeholder>
+                {formatDateToBRFormat(date.toISOString(), { customFormat: false })}
+            </Placeholder>
 
             {showPicker && (
                 <DateTimePicker
