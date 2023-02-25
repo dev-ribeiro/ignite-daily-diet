@@ -20,6 +20,7 @@ import { MealStorageDTO } from "@storage/meal/MealStorageDTO";
 import { createDateTime } from "@utils/createDateTime";
 import { Alert } from "react-native";
 import { createMeal } from "@storage/meal/mealCreate";
+import { generateUUID } from "@utils/generateUUID";
 
 export function NewMeal() {
     const [name, setName] = useState('')
@@ -57,8 +58,7 @@ export function NewMeal() {
 
         try {
             const dateTime = createDateTime(date, time)
-            const id = `${dateTime}(-)${name}`
-
+            const id = generateUUID()
             const meal:MealStorageDTO = {
                 id,
                 dateTime,
@@ -66,6 +66,8 @@ export function NewMeal() {
                 description,
                 isDiet: isDiet!!,
             }
+
+            console.log(meal)
 
             createMeal(meal)
 
@@ -77,7 +79,7 @@ export function NewMeal() {
             setTime(new Date())
             setDate(new Date())
         } catch (error) {
-
+            // TODO
         }
     }
 
