@@ -41,9 +41,9 @@ export function Meal() {
     const hour = formatHourToBRFormat(dateTime)
     const navigationParam = meal
 
-    function handleDeleteMeal(id: string) {
+    async function handleDeleteMeal(id: string) {
         try {
-            mealDelete(id)
+            await mealDelete(id)
             navigate("home")
         } catch (error) {
             Alert.alert("Excluir refeição", "Não foi possível excluir a refeição")

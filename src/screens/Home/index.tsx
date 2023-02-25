@@ -12,6 +12,7 @@ import { mealsGetAll } from "@storage/meal/mealsGetAll";
 import { CustomError } from "@utils/errors/CustomError";
 import { useCallback } from "react";
 import { formatDateToBRFormat } from "@utils/formatter";
+import { Loading } from "@components/Loading";
 
 type Section = {
     title: string
@@ -20,6 +21,7 @@ type Section = {
 
 export function Home() {
     const [data, setData] = useState<Section[]>([])
+    const [isLoading, setIsLoading] = useState(true)
     const { navigate } = useNavigation()
 
     function transformDataFromStorage(arr: MealStorageDTO[]) {
@@ -33,11 +35,24 @@ export function Home() {
             .map(date => {
                 return {
                     title: date,
-                    data: arr.filter(meal => formatDateToBRFormat(meal.dateTime, { customFormat: true }) === date)
+                    data: arr
+                        .sort((a, b) => {
+                            if(new Date(a.dateTime) < new Date(b.dateTime)){
+                                return -1
+                            }
+
+                            if(new Date(a.dateTime) > new Date(b.dateTime)){
+                                return 1
+                            }
+
+                            return 0
+                        })
+                        .filter(meal => formatDateToBRFormat(meal.dateTime, { customFormat: true }) === date)
                 }
             })
 
         setData(adapaterData)
+        setIsLoading(false)
     }
 
     async function fetchDataFromStorage() {
@@ -75,29 +90,32 @@ export function Home() {
                     <PercentPanel percent={5100} />
                 </PercentWrapper>
                 <CreateMeal />
-                <SectionList
-                    sections={data}
-                    keyExtractor={item => item.id}
-                    renderSectionHeader={({ section: { title } }) => {
-                        return (
-                            <DayHeader
-                                style={{
-                                    marginTop: (data[0].title === title) ? 0 : 32
-                                }}
-                            >
-                                {title}
-                            </DayHeader>
-                        )
-                    }}
-                    renderItem={({ item }) => (
-                        <FoodCard
-                            title={item.title}
-                            dateTime={item.dateTime}
-                            indicator={!item.isDiet ? 'failure' : 'success'}
-                            onPress={() => handleNavigationToMeal(item)}
-                        />
-                    )}
-                />
+                {isLoading
+                    ? (<Loading />)
+                    : (<SectionList
+                        sections={data}
+                        keyExtractor={item => item.id}
+                        renderSectionHeader={({ section: { title } }) => {
+                            return (
+                                <DayHeader
+                                    style={{
+                                        marginTop: (data[0].title === title) ? 0 : 32
+                                    }}
+                                >
+                                    {title}
+                                </DayHeader>
+                            )
+                        }}
+                        renderItem={({ item }) => (
+                            <FoodCard
+                                title={item.title}
+                                dateTime={item.dateTime}
+                                indicator={!item.isDiet ? 'failure' : 'success'}
+                                onPress={() => handleNavigationToMeal(item)}
+                            />
+                        )}
+                    />)}
+
             </Container>
         </SafeAreaView>
     )
