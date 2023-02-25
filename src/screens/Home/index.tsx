@@ -23,6 +23,7 @@ export function Home() {
     const [data, setData] = useState<Section[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [allMeals, setAllMeals] = useState<number>(0)
+    const [mealsInDiet, setMealsInDiet] = useState(0)
     const [percent, setPercent] = useState<number>(0)
     const { navigate } = useNavigation()
 
@@ -63,6 +64,9 @@ export function Home() {
         if (arr.length > 0) {
 
             const mealsInDiet = arr.filter(meal => meal.isDiet === true)
+
+            setMealsInDiet(mealsInDiet.length)
+
             const calcPercent = (mealsInDiet.length / arr.length) * 100
 
             setPercent(Number(calcPercent.toFixed(0)))
@@ -85,7 +89,7 @@ export function Home() {
     }
 
     function handleNavigationToStatistics() {
-        navigate("statistics", { allMeals, percent })
+        navigate("statistics", { allMeals, percent, mealsInDiet })
     }
 
     function handleNavigationToMeal(meal: MealStorageDTO) {

@@ -13,7 +13,8 @@ export declare global {
         };
         statistics: {
           allMeals: number,
-          percent: number
+          percent: number,
+          mealsInDiet: number
         };
         failure: undefined;
         success: undefined;
