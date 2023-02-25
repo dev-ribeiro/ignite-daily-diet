@@ -5,21 +5,22 @@ import { formatHourToBRFormat } from "@utils/formatter";
 
 type Props = {
     defaultValue?: Date
+    time: Date
+    handleUpdateTime: (param:Date) => void
 }
 
-export function TimePicker({ defaultValue }: Props) {
-    const [time, setTime] = useState(new Date());
+export function TimePicker({ defaultValue, handleUpdateTime, time }: Props) {
     const [showTimePicker, setShowTimePicker] = useState(false);
 
     const handleUserTimePicker = (event: any, selectedTime?: Date) => {
         const currentTime = selectedTime || time;
-        setTime(currentTime);
+        handleUpdateTime(currentTime);
         setShowTimePicker(false);
     };
 
     useEffect(()=>{
         if(defaultValue){
-            setTime(defaultValue)
+            handleUpdateTime(defaultValue)
         }
     },[])
 
